@@ -21,8 +21,8 @@ describe('processHandles', function () {
         var metrics = register.getMetricsAsJSON();
 
         expect(metrics).to.have.length(1);
-        expect(metrics[0].help).to.equal('Number of active handles.');
+        expect(metrics[0].help).to.equal('Number of active file handles.');
         expect(metrics[0].type).to.equal('gauge');
-        expect(metrics[0].name).to.equal('node_active_handles_total');
+        expect(metrics[0].name).to.equal('nodejs_active_fds');
     });
 });
