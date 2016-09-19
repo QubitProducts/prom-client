@@ -1,5 +1,7 @@
 'use strict';
 
+var optional = require('optional');
+
 describe('defaultMetrics', function() {
 	var expect = require('chai').expect;
 	var register = require('../index').register;
@@ -53,13 +55,25 @@ describe('defaultMetrics', function() {
 	it('should add metrics to the registry', function() {
 		expect(register.getMetricsAsJSON()).to.have.length(0);
 		interval = defaultMetrics();
-		expect(register.getMetricsAsJSON()).to.have.length(7);
+
+    var gc = optional('gc-stats');
+    if(typeof gc === 'function') {
+      expect(register.getMetricsAsJSON()).to.have.length(10);
+    } else {
+      expect(register.getMetricsAsJSON()).to.have.length(7);
+    };
 	});
 
 	it('should allow blacklisting unwanted metrics', function() {
 		expect(register.getMetricsAsJSON()).to.have.length(0);
 		interval = defaultMetrics(['osMemoryHeap']);
-		expect(register.getMetricsAsJSON()).to.have.length(6);
+
+    var gc = optional('gc-stats');
+    if(typeof gc === 'function') {
+      expect(register.getMetricsAsJSON()).to.have.length(9);
+    } else {
+      expect(register.getMetricsAsJSON()).to.have.length(6);
+    };
 	});
 
 	it('should allow blacklisting all metrics', function() {
