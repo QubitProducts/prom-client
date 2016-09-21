@@ -1,4 +1,7 @@
-# Prometheus client for node.js [![Build Status](https://travis-ci.org/siimon/prom-client.svg?branch=master)](https://travis-ci.org/siimon/prom-client) [![Build status](https://ci.appveyor.com/api/projects/status/k2e0gwonkcee3lp9/branch/master?svg=true)](https://ci.appveyor.com/project/siimon/prom-client/branch/master)
+# Prometheus client for node.js
+
+This is a fork of https://github.com/siimon/prom-client . We're contributing
+changes upstream, please support the original project.
 
 A prometheus client for node.js that supports histogram, summaries, gauges and counters.
 
