@@ -1,7 +1,10 @@
 {
-  "name": "prom-client",
-  "version": "4.0.0",
+  "name": "@qutics/prom-client",
+  "version": "4.1.0",
   "description": "Client for prometheus",
+  "publishConfig": {
+    "registry": "https://registry.qubit.com/"
+  },
   "main": "index.js",
   "files": [
     "lib/",
