@@ -58,9 +58,9 @@ describe('defaultMetrics', function() {
 
 		var gc = optional('gc-stats');
 		if(typeof gc === 'function') {
-			expect(register.getMetricsAsJSON()).to.have.length(13);
+			expect(register.getMetricsAsJSON()).to.have.length(15);
 		} else {
-			expect(register.getMetricsAsJSON()).to.have.length(10);
+			expect(register.getMetricsAsJSON()).to.have.length(12);
 		};
 	});
 
@@ -70,9 +70,9 @@ describe('defaultMetrics', function() {
 
 		var gc = optional('gc-stats');
 		if(typeof gc === 'function') {
-			expect(register.getMetricsAsJSON()).to.have.length(8);
+			expect(register.getMetricsAsJSON()).to.have.length(10);
 		} else {
-			expect(register.getMetricsAsJSON()).to.have.length(5);
+			expect(register.getMetricsAsJSON()).to.have.length(7);
 		};
 	});
 
