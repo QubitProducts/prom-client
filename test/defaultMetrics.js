@@ -10,7 +10,7 @@ describe('defaultMetrics', function() {
 	var cpuUsage;
 	var interval;
 
-	before(function () {
+	before(function() {
 		platform = process.platform;
 		cpuUsage = process.cpuUsage;
 
@@ -20,12 +20,12 @@ describe('defaultMetrics', function() {
 
 		if(cpuUsage) {
 			Object.defineProperty(process, 'cpuUsage', {
-				value: function () {
+				value: function() {
 					return { user: 1000, system: 10 };
 				}
 			});
 		} else {
-			process.cpuUsage = function () {
+			process.cpuUsage = function() {
 				return { user: 1000, system: 10 };
 			};
 		}
@@ -33,7 +33,7 @@ describe('defaultMetrics', function() {
 		register.clear();
 	});
 
-	after(function () {
+	after(function() {
 		Object.defineProperty(process, 'platform', {
 			value: platform
 		});
@@ -56,24 +56,24 @@ describe('defaultMetrics', function() {
 		expect(register.getMetricsAsJSON()).to.have.length(0);
 		interval = defaultMetrics();
 
-    var gc = optional('gc-stats');
-    if(typeof gc === 'function') {
-      expect(register.getMetricsAsJSON()).to.have.length(13);
-    } else {
-      expect(register.getMetricsAsJSON()).to.have.length(10);
-    };
+		var gc = optional('gc-stats');
+		if(typeof gc === 'function') {
+			expect(register.getMetricsAsJSON()).to.have.length(15);
+		} else {
+			expect(register.getMetricsAsJSON()).to.have.length(12);
+		};
 	});
 
 	it('should allow blacklisting unwanted metrics', function() {
 		expect(register.getMetricsAsJSON()).to.have.length(0);
 		interval = defaultMetrics(['osMemoryHeap']);
 
-    var gc = optional('gc-stats');
-    if(typeof gc === 'function') {
-      expect(register.getMetricsAsJSON()).to.have.length(8);
-    } else {
-      expect(register.getMetricsAsJSON()).to.have.length(5);
-    };
+		var gc = optional('gc-stats');
+		if(typeof gc === 'function') {
+			expect(register.getMetricsAsJSON()).to.have.length(10);
+		} else {
+			expect(register.getMetricsAsJSON()).to.have.length(7);
+		};
 	});
 
 	it('should allow blacklisting all metrics', function() {
@@ -82,4 +82,19 @@ describe('defaultMetrics', function() {
 		register.clear();
 		expect(register.getMetricsAsJSON()).to.have.length(0);
 	});
+
+
+	describe('disabling', function() {
+		it('should not throw error', function() {
+			var fn = function() {
+				delete require.cache[require.resolve('../index')];
+				var client = require('../index');
+				clearInterval(client.defaultMetrics());
+				register.clear();
+			};
+
+			expect(fn).to.not.throw(Error);
+		});
+	});
+
 });

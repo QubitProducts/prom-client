@@ -26,12 +26,12 @@ describe('register', function() {
 		});
 	});
 
-	it('should handle more than one metric', function() {
-		register.registerMetric(getMetric());
+	it('should throw on more than one metric', function() {
 		register.registerMetric(getMetric());
 
-		var actual = register.metrics().split('\n');
-		expect(actual).to.have.length(7);
+		expect(function() {
+			register.registerMetric(getMetric());
+		}).to.throw('A metric with the name test_metric has already been registered.');
 	});
 
 	it('should handle a metric without labels', function() {
@@ -95,7 +95,7 @@ describe('register', function() {
 	});
 
 	describe('should output metrics as JSON', function() {
-		it('with one metric', function() {
+		it('should output metrics as JSON', function() {
 			register.registerMetric(getMetric());
 			var output = register.getMetricsAsJSON();
 
@@ -105,32 +105,30 @@ describe('register', function() {
 			expect(output[0].help).to.equal('A test metric');
 			expect(output[0].values.length).to.equal(1);
 		});
-
-		it('with multiple metrics', function() {
-			register.registerMetric(getMetric());
-			register.registerMetric(getMetric());
-			register.registerMetric(getMetric());
-
-			var output = register.getMetricsAsJSON();
-
-			expect(output.length).to.equal(3);
-
-			expect(output[0].name).to.equal('test_metric');
-			expect(output[1].name).to.equal('test_metric');
-			expect(output[2].name).to.equal('test_metric');
-
-			expect(output[0].values.length).to.equal(1);
-			expect(output[1].values.length).to.equal(1);
-			expect(output[2].values.length).to.equal(1);
-		});
-
 	});
 
-	function getMetric() {
+	it('should allow removing single metrics', function() {
+		register.registerMetric(getMetric());
+		register.registerMetric(getMetric('some other name'));
+
+		var output = register.getMetricsAsJSON();
+		expect(output.length).to.equal(2);
+
+		register.removeSingleMetric('test_metric');
+
+		output = register.getMetricsAsJSON();
+
+		expect(output.length).to.equal(1);
+		expect(output[0].name).to.equal('some other name');
+	});
+
+	function getMetric(name) {
+		name = name || 'test_metric';
 		return {
+			name: name,
 			get: function() {
 				return {
-					name: 'test_metric',
+					name: name,
 					type: 'counter',
 					help: 'A test metric',
 					values: [ {
