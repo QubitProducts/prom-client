@@ -237,3 +237,10 @@ new client.Histogram('metric_name', 'metric_help', {
 ### Garbage Collection
 
 To avoid dependencies in this module, GC stats are kept outside of it. If you want GC stats, you can use https://github.com/SimenB/node-prometheus-gc-stats
+
+### Disabling
+
+In certain environments you might want to entirely disable the client. Ror example if you are running mocha tests in watch mode, the prom client might start complaining about re-registered metrics. There are two methods to disabling the client:
+
+- You can set the `DISABLE_PROM_CLIENT` environment variable, e.g: `DISABLE_PROM_CLIENT=1 mocha -w test/unit`
+- Alternatively you can call `promClient.register.disable()` in your test setup, and `promClient.register.enable()` in the teardown. This strategy is useful if in some tests you want to verify metric registration, but in others you want to ignore it. The `disable()` method also clears the metrics.
