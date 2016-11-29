@@ -60,7 +60,7 @@ describe('defaultMetrics', function() {
 		if(typeof gc === 'function') {
 			expect(register.getMetricsAsJSON()).to.have.length(15);
 		} else {
-			expect(register.getMetricsAsJSON()).to.have.length(12);
+			expect(register.getMetricsAsJSON()).to.have.length(13);
 		};
 	});
 
@@ -72,7 +72,7 @@ describe('defaultMetrics', function() {
 		if(typeof gc === 'function') {
 			expect(register.getMetricsAsJSON()).to.have.length(10);
 		} else {
-			expect(register.getMetricsAsJSON()).to.have.length(7);
+			expect(register.getMetricsAsJSON()).to.have.length(8);
 		};
 	});
 

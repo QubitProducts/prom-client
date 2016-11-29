@@ -18,8 +18,8 @@ exports.exponentialBuckets = require('./lib/bucketGenerators').exponentialBucket
 
 var defaultMetrics = require('./lib/defaultMetrics');
 
-if (exports.register.isEnabled()) {
-  defaultMetrics();
+if(exports.register.isEnabled()) {
+	defaultMetrics();
 }
 
 exports.defaultMetrics = defaultMetrics;
