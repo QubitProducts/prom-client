@@ -26,11 +26,16 @@ describe('register', function() {
 		});
 	});
 
+	it('should not throw on identical metric', function() {
+		register.registerMetric(getMetric());
+		register.registerMetric(getMetric());
+	});
+
 	it('should throw on more than one metric', function() {
 		register.registerMetric(getMetric());
 
 		expect(function() {
-			register.registerMetric(getMetric());
+			register.registerMetric(getMetricWithLabel());
 		}).to.throw('A metric with the name test_metric has already been registered.');
 	});
 
@@ -126,6 +131,28 @@ describe('register', function() {
 		name = name || 'test_metric';
 		return {
 			name: name,
+			get: function() {
+				return {
+					name: name,
+					type: 'counter',
+					help: 'A test metric',
+					values: [ {
+						value: 12,
+						labels: {
+							label: 'hello',
+							code: '303'
+						}
+					}]
+				};
+			}
+		};
+	}
+
+	function getMetricWithLabel(name) {
+		name = name || 'test_metric';
+		return {
+			name: name,
+			labelNames: ['othe_labels'],
 			get: function() {
 				return {
 					name: name,
