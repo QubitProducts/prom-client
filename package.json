@@ -1,6 +1,6 @@
 {
   "name": "@qutics/prom-client",
-  "version": "5.2.1",
+  "version": "5.2.2",
   "description": "Client for prometheus",
   "publishConfig": {
     "registry": "https://registry.qubit.com/"
