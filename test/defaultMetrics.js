@@ -56,7 +56,7 @@ describe('defaultMetrics', function() {
 		expect(register.getMetricsAsJSON()).to.have.length(0);
 		interval = defaultMetrics();
 
-		var gc = optional('gc-stats');
+		var gc = optional('@sematext/gc-stats');
 		if(typeof gc === 'function') {
 			expect(register.getMetricsAsJSON()).to.have.length(15);
 		} else {
@@ -68,7 +68,7 @@ describe('defaultMetrics', function() {
 		expect(register.getMetricsAsJSON()).to.have.length(0);
 		interval = defaultMetrics(['osMemoryHeap']);
 
-		var gc = optional('gc-stats');
+		var gc = optional('@sematext/gc-stats');
 		if(typeof gc === 'function') {
 			expect(register.getMetricsAsJSON()).to.have.length(10);
 		} else {
