@@ -45,6 +45,6 @@
     "util-extend": "^1.0.1"
   },
   "optionalDependencies": {
-    "gc-stats": "^1.0.0"
+    "@sematext/gc-stats": "^1.0.0"
   }
 }
